@@ -75,23 +75,37 @@ if __name__ == "__main__":
     
     def read_file(file):
         mylist = list()
+        l_count = 1
         with open(file, 'r') as f:
             for line in f:
-                try:
-                    tokens = line.split(',')
-                    phone = int(tokens[0])          # Skips the first information line and other 'empty' ones.
-                    name = str(tokens[1])           # --||--
-                    lastlocation = tokens[2]
-                    lastseen = tokens[3]
-                    state = tokens[4].strip("\n")   # gets rid of "\n" char
-                    rest = f"{name}, {lastlocation}, {lastseen}, {state}"   # format of the value inserted
-                    myHT.insert(phone, rest)        # inserts the key with its value to MyHashTable
-                except ValueError:
+                if l_count == 1:
                     pass
+                else:
+                    tokens = line.split(',')
+                    phone = str(tokens[0])          # key
+                    name = str(tokens[1])           # value
+                    # lastlocation = tokens[2]
+                    # lastseen = tokens[3]
+                    # state = tokens[4].strip("\n")   # gets rid of "\n" char
+                    # rest = f"{name}, {lastlocation}, {lastseen}, {state}"   # format of the value inserted
+                    myHT.insert(phone, name)        # inserts the key with its value to MyHashTable
+                l_count += 1
+            
         return mylist
     
     read_file("Phonebook.csv")  
     
     print(myHT.display_all())   # displays all the keys
-    print(myHT.search(3080376539))  # displays the value from a valid key, else returns None
+    print(myHT.search(3080376539))  # displays the value (name) from a valid key, else returns None
+    phone_number_1 = '123456789'
+    name_1 = 'UiS'
+    myHT.insert(phone_number_1, name_1)
+
+    phone_number_2 = '987654321'
+    name_2 = 'NTNU'
+    myHT.insert(phone_number_2, name_2)
+    
+    print(myHT.display_all())
+    print(myHT.get_hash(phone_number_1))
+    print(myHT.get_hash(phone_number_2))
     
