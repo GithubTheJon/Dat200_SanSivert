@@ -12,7 +12,10 @@ class MyHashTable:
         # Add the numbers for each character to obtain the hash for the entire string
         # Take the remainder of the result with the size of the data list
         # Variable to store the result (updated after each iteration)
-        return hash(key) % self.max_size    # needs to hash to the max_size
+        hash_sum = 0
+        for char in key:
+            hash_sum += ord(char)
+        return hash_sum % self.max_size    # needs to hash to the max_size
 
     def get_index(self, key):
         # Take the remainder of the result with the size of the data list and return the index of the list
@@ -20,7 +23,7 @@ class MyHashTable:
 
     def insert(self, key, value):
         # 1. Find the index for the key using get_index
-        index = self.get_hash(key)
+        index = self.get_index(key)
         if self.table[index] is None:
             self.table[index] = []
         # 2. Store the key-value pair at the right index
@@ -32,7 +35,7 @@ class MyHashTable:
 
     def search(self, key):
         # 1. Find the index for the key using get_index
-        index = self.get_hash(key)
+        index = self.get_index(key)
         if self.table[index] is None:
             return None
         for pair in self.table[index]:
@@ -96,7 +99,6 @@ if __name__ == "__main__":
     read_file("Phonebook.csv")  
     
     print(myHT.display_all())   # displays all the keys
-    print(myHT.search(3080376539))  # displays the value (name) from a valid key, else returns None
     phone_number_1 = '123456789'
     name_1 = 'UiS'
     myHT.insert(phone_number_1, name_1)
@@ -106,6 +108,10 @@ if __name__ == "__main__":
     myHT.insert(phone_number_2, name_2)
     
     print(myHT.display_all())
-    print(myHT.get_hash(phone_number_1))
-    print(myHT.get_hash(phone_number_2))
+    print(myHT.get_index(phone_number_1))
+    print(myHT.get_index(phone_number_2), "\n")
     
+    print(myHT.search("3354577686"))  # displays the value (name) from a valid key, else returns None
+    print(myHT.get_index("3354577686"))
+    
+    # print(myHT.display_all())
